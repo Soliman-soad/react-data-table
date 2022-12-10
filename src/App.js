@@ -5,14 +5,35 @@ import { useState } from 'react';
 
 function App() {
   const [data,setData] =useState([]);
-  const [loading,setLoading]= useState(false)
+  const[loading, setLoading] = useState(true)
   useState(()=>{
     fetch('https://retoolapi.dev/4547z4/data')
     .then(res => res.json())
     .then(data => {
       setData(data)
     })
-  },[data])
+  },[data,loading])
+  const customStyles = {
+    rows: {
+        style: {
+            minHeight: '72px', // override the row height
+        },
+    },
+    headCells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+            borderTop:  "solid 1px gray"
+            
+        },
+    },
+    cells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for data cells
+            paddingRight: '8px',
+        },
+    },
+};
 
   const columns = [
     {
@@ -61,11 +82,6 @@ function App() {
         sortable: true,
     },
     {
-        name: 'Airport code',
-        selector: row => row.airport_code,
-        sortable: true,
-    },
-    {
         name: 'Ip address',
         selector: row => row.ip_address,
         sortable: true,
@@ -76,11 +92,22 @@ function App() {
         sortable: true,
     },
 ];
+const toggleColor = (e) =>{
+  
+  if(e.status === "true"){
+    e.status='false'
+    setLoading(!loading)
+  }
+  else if(e.status === "false"){
+    e.status='true'
+    setLoading(!loading)
+  }
+}
 const conditionalRowStyles = [
   {
     when: row => row.status === "true",
     style: {
-      backgroundColor: 'green',
+      backgroundColor: '#50C878',
       color: 'white',
       '&:hover': {
         cursor: 'pointer',
@@ -90,7 +117,7 @@ const conditionalRowStyles = [
   {
     when: row => row.status === "false",
     style: {
-      backgroundColor: 'red',
+      backgroundColor: '#FF6347',
       color: 'white',
       '&:hover': {
         cursor: 'pointer',
@@ -99,12 +126,16 @@ const conditionalRowStyles = [
   }
   
 ];
+
   return (
     <div className="App">
       <DataTable
             columns={columns}
             data={data}
             conditionalRowStyles = {conditionalRowStyles}
+            customStyles={customStyles}
+            pagination 
+            onRowClicked={toggleColor}
         />
     </div>
   );
