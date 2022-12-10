@@ -35,12 +35,76 @@ function App() {
         selector: row => row.first_name+" " + row.last_name,
         sortable: true,
     },
+    {
+        name: 'Gender',
+        selector: row => row.gender,
+        sortable: true,
+    },
+    {
+        name: 'Mobile',
+        selector: row => row.mobile,
+        sortable: true,
+    },
+    {
+        name: 'Time',
+        selector: row => row.time,
+        sortable: true,
+    },
+    {
+        name: 'Email',
+        selector: row => row.email,
+        sortable: true,
+    },
+    {
+        name: 'Area',
+        selector: row => row.area,
+        sortable: true,
+    },
+    {
+        name: 'Airport code',
+        selector: row => row.airport_code,
+        sortable: true,
+    },
+    {
+        name: 'Ip address',
+        selector: row => row.ip_address,
+        sortable: true,
+    },
+    {
+        name: 'Status',
+        selector: row => row.status,
+        sortable: true,
+    },
+];
+const conditionalRowStyles = [
+  {
+    when: row => row.status === "true",
+    style: {
+      backgroundColor: 'green',
+      color: 'white',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+  {
+    when: row => row.status === "false",
+    style: {
+      backgroundColor: 'red',
+      color: 'white',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  }
+  
 ];
   return (
     <div className="App">
       <DataTable
             columns={columns}
             data={data}
+            conditionalRowStyles = {conditionalRowStyles}
         />
     </div>
   );
