@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import DataTable from 'react-data-table-component';
 import { useState } from 'react';
+import Navber from './Navber';
 
 function App() {
   const [data,setData] =useState([]);
@@ -129,6 +130,7 @@ const conditionalRowStyles = [
 
   return (
     <div className="App">
+      <Navber/>
       <DataTable
             columns={columns}
             data={data}
